@@ -113,15 +113,18 @@
   const imageContainer = document.getElementById('imageContainer');
   const productImage = document.getElementById('productImage');
 
-  function formatDate(dateString) {
-    if (dateString === 'N/A') return dateString;
-    const date = new Date(dateString);
-    if (isNaN(date)) return dateString; 
-    const day = ('0' + date.getDate()).slice(-2);
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  }
+function formatDate(dateString) {
+  if (dateString === 'N/A') return dateString;
+  const date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+
+  const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+                      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${month}.${year}`;
+}
 
   if (!batch_no) {
     document.getElementById('product').innerHTML = '<p class="not-found">No Batch Number Provided in URL.</p>';
