@@ -101,6 +101,7 @@
   const name = params.get('name') || 'Unknown Product';
   const generic = params.get('generic') || 'Unknown';
   const batch_no = params.get('batch');
+  const gtin = params.get('gtin') || 'N/A';
   const mfgDate = params.get('mfgDate') || 'N/A';
   const expDate = params.get('expDate') || 'N/A';
   const manufacturer = params.get('manufacturer') || 'N/A';
@@ -130,13 +131,13 @@
     productTable.innerHTML = `
       <tr><th>Generic</th><td>${generic}</td></tr>
       <tr><th>Batch No</th><td>${batch_no}</td></tr>
+      <tr><th>GTIN</th><td>${gtin}</td></tr>
       <tr><th>Manufactured</th><td>${formatDate(mfgDate)}</td></tr>
       <tr><th>Expiry</th><td>${formatDate(expDate)}</td></tr>
       <tr><th>Manufacturer</th><td>${manufacturer}</td></tr>
       <tr><th>Address</th><td>${address}</td></tr>
     `;
 
-    // Show image if present and valid
     if (image && image.startsWith('data:image')) {
       productImage.src = image;
       imageContainer.style.display = 'block';
