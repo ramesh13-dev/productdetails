@@ -103,7 +103,7 @@
     const params = new URLSearchParams(window.location.search);
 
     const data = {
-      upic: params.get('upic') || '—',
+      upic: params.get('gtin') || '—',
       name: params.get('name') || 'TIGLOR MD',
       generic: params.get('generic') || '—',
       batch: params.get('batch') || '—',
