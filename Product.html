@@ -123,7 +123,8 @@ function formatDate(dateString) {
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
 
-  return `${month}.${year}`;
+  // If month is MAY, return without dot
+  return month === "MAY" ? `${month} ${year}` : `${month}.${year}`;
 }
 
   if (!batch_no) {
