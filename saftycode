@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details (From URL)</title>
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #c3ecb2, #7dd5d5);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 650px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      backdrop-filter: blur(5px);
+    }
+    .header {
+      background: linear-gradient(135deg, #2b5876, #4e4376);
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      padding: 20px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      margin: -30px -30px 20px -30px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 15px;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: middle;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    th {
+      width: 40%;
+      color: #34495e;
+      font-weight: 600;
+    }
+    td {
+      background: #f0f8ff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
+      color: #2c3e50;
+    }
+    tr:hover td {
+      background: #d1f0ff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .not-found {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      font-size: 20px;
+      padding: 20px;
+    }
+    .image-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .image-container img {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="product">
+  <div class="header">Loading...</div>
+  <table id="product-table"></table>
+  <div class="image-container" id="imageContainer" style="display:none;">
+    <img id="productImage" alt="Product Image">
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const name = params.get('name') || 'Unknown Product';
+  const generic = params.get('generic') || 'Unknown';
+  const batch_no = params.get('batch');
+  const gtin = params.get('gtin') || 'N/A';
+  const mfgDate = params.get('mfgDate') || 'N/A';
+  const expDate = params.get('expDate') || 'N/A';
+  const manufacturer = params.get('manufacturer') || 'N/A';
+  const address = params.get('address') || 'N/A';
+  const image = params.get('image'); // base64 image
+
+  const productTable = document.getElementById('product-table');
+  const header = document.querySelector('.header');
+  const imageContainer = document.getElementById('imageContainer');
+  const productImage = document.getElementById('productImage');
+
+function formatDate(dateString) {
+  debugger;
+  if (dateString === 'N/A') return dateString;
+  const date = new Date(dateString);
+  if (isNaN(date)) return dateString;
+
+  const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+                      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  // If month is MAY, return without dot
+  return month === "MAY" ? `${month} ${year}` : `${month}.${year}`;
+}
+
+  if (!batch_no) {
+    document.getElementById('product').innerHTML = '<p class="not-found">No Batch Number Provided in URL.</p>';
+  } else {
+    header.textContent = name;
+
+    productTable.innerHTML = `
+    <tr><th>GTIN</th><td>${gtin}</td></tr>
+      <tr><th>Generic</th><td>${generic}</td></tr>
+      <tr><th>Batch No</th><td>${batch_no}</td></tr>
+      <tr><th>Manufactured</th><td>${formatDate(mfgDate)}</td></tr>
+      <tr><th>Expiry</th><td>${formatDate(expDate)}</td></tr>
+      <tr><th>Manufacturer</th><td>${manufacturer}</td></tr>
+      <tr><th>Address</th><td>${address}</td></tr>
+    `;
+
+    if (image && image.startsWith('data:image')) {
+      productImage.src = image;
+      imageContainer.style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
