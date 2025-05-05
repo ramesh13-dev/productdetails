@@ -87,16 +87,13 @@
 
   <div class="card" id="product-card">
     <div class="card-header">
-      <!-- Change the src to your logo filename -->
       <img src="sai_mirra_logo_new.png" alt="Sai Mirra Innopharm Pvt. Ltd. Logo">
       <h2>Sai Mirra Innopharm Pvt. Ltd.</h2>
     </div>
     <div class="card-body">
       <p class="product-title" id="productName">Loading…</p>
       <a href="#" class="details-link">Product Details</a>
-      <table class="details-table" id="productTable">
-        <!-- JS will inject rows here -->
-      </table>
+      <table class="details-table" id="productTable"></table>
     </div>
   </div>
 
@@ -114,13 +111,17 @@
       address: params.get('address') || '—'
     };
 
-    function formatDMY(dateString) {
-      const d = new Date(dateString);
-      if (isNaN(d)) return dateString || '—';
-      const dd = String(d.getDate()).padStart(2, '0');
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const yyyy = d.getFullYear();
-      return `${dd}/${mm}/${yyyy}`;
+    function formatDate(dateString) {
+      if (dateString === 'N/A') return dateString;
+      const date = new Date(dateString);
+      if (isNaN(date)) return dateString;
+
+      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+                          "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+
+      return month === "MAY" ? `${month} ${year}` : `${month}.${year}`;
     }
 
     document.getElementById('productName').textContent = data.name;
@@ -130,8 +131,8 @@
       ['Product Name:', data.name],
       ['Generic Name:', data.generic],
       ['Batch No:', data.batch],
-      ['Date of Manufacture:', formatDMY(data.mfgDate)],
-      ['Date of Expiry:',    formatDMY(data.expDate)],
+      ['Date of Manufacture:', formatDate(data.mfgDate)],
+      ['Date of Expiry:', formatDate(data.expDate)],
       ['Name and Address of the Manufacturer:', `${data.manufacturer}\n${data.address}`]
     ];
 
