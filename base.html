@@ -103,7 +103,7 @@
     const params = new URLSearchParams(window.location.search);
 
     const data = {
-      upic: params.get('gtin') || '—',
+      gtin: params.get('gtin') || '—',
       name: params.get('name') || 'TIGLOR MD',
       generic: params.get('generic') || '—',
       batch: params.get('batch') || '—',
@@ -125,7 +125,7 @@
     document.getElementById('productName').textContent = data.name;
 
     const rows = [
-      ['Unique Product Identification Code:', data.upic],
+      ['Unique Product Identification Code:', data.gtin],
       ['Product Name:', data.name],
       ['Generic Name:', data.generic],
       ['Batch No:', data.batch],
