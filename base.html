@@ -87,8 +87,9 @@
 
   <div class="card" id="product-card">
     <div class="card-header">
-      <img src="logo.png" alt="Manufacturer Logo">
-      <h2>The Madras Pharmaceuticals</h2>
+      <!-- Change the src to your logo filename -->
+      <img src="sai_mirra_logo.png" alt="Sai Mirra Innopharm Pvt. Ltd. Logo">
+      <h2>Sai Mirra Innopharm Pvt. Ltd.</h2>
     </div>
     <div class="card-body">
       <p class="product-title" id="productName">Loading…</p>
@@ -101,7 +102,7 @@
 
   <script>
     const params = new URLSearchParams(window.location.search);
-debugger;
+
     const data = {
       gtin: params.get('gtin') || '—',
       name: params.get('name') || 'TIGLOR MD',
@@ -125,7 +126,7 @@ debugger;
     document.getElementById('productName').textContent = data.name;
 
     const rows = [
-      ['Unique Product Identification Code:', data.gtin],
+      ['GTIN (Unique Product Code):', data.gtin],
       ['Product Name:', data.name],
       ['Generic Name:', data.generic],
       ['Batch No:', data.batch],
@@ -140,7 +141,6 @@ debugger;
       const th = document.createElement('th');
       const td = document.createElement('td');
       th.textContent = label;
-      // allow multiline in address
       td.innerHTML = value.replace(/\n/g, '<br>');
       tr.append(th, td);
       table.appendChild(tr);
