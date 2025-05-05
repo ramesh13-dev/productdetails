@@ -114,6 +114,7 @@
   const productImage = document.getElementById('productImage');
 
 function formatDate(dateString) {
+  debugger;
   if (dateString === 'N/A') return dateString;
   const date = new Date(dateString);
   if (isNaN(date)) return dateString;
